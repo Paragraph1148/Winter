@@ -111,7 +111,6 @@ STOP_WORDS = {
 }
 
 
-# Step 2: Text Cleaning Function
 def clean_text(text):
     """
     Input: raw string (title + abstract)
@@ -122,8 +121,7 @@ def clean_text(text):
     2. Remove punctuation (use regex)
     3. Remove extra spaces
     """
-    # TODO: implement
-    return text
+    return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", "", text.lower())).strip()
 
 
 # Step 3: Tokenization Function
