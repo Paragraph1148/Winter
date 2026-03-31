@@ -136,7 +136,6 @@ def tokenize(text):
     return [token for token in text.split(' ') if token]
 
 
-# Step 4: Remove Stop Words
 def remove_stopwords(tokens):
     """
     Input: list of tokens
@@ -144,8 +143,7 @@ def remove_stopwords(tokens):
 
     Remove words that are in STOP_WORDS
     """
-    # TODO: implement
-    return []
+    return [word for word in tokens if word not in STOP_WORDS]
 
 
 # Step 5: Count Token Frequency
