@@ -157,8 +157,7 @@ def get_token_freq(tokens):
     return dict(Counter(tokens))
 
 
-# Step 6: Process ONE document
-def process_document(doc):
+def process_document(page):
     """
     Input: one JSON object (paper)
     Output: processed document
@@ -180,8 +179,27 @@ def process_document(doc):
         "tokens": {word: count}
     }
     """
-    # TODO: implement
-    return {}
+    # 1 get fields
+    pid = page.get("id")
+    ptit = page.get("title")
+    pabs = page.get("abstract")
+
+    # 2 combine text and abstract
+    combined = f"{ptit} {pabs}"
+
+    # 3 clean
+    cleaned = clean_text(combined)
+
+    # 4 tokenize
+    tokens = tokenize(cleaned)
+
+    # 5 remove stopwords
+    tokens = remove_stopwords(tokens)
+
+    # 6 count freq
+    freq = get_token_freq(tokens)
+    
+    return {"id": pid, "tokens": freq}
 
 
 # Step 7: Read JSONL file
