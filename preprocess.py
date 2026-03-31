@@ -146,7 +146,6 @@ def remove_stopwords(tokens):
     return [word for word in tokens if word not in STOP_WORDS]
 
 
-# Step 5: Count Token Frequency
 def get_token_freq(tokens):
     """
     Input: list of tokens
@@ -155,8 +154,7 @@ def get_token_freq(tokens):
     Example:
     ["search", "engine", "search"] -> {"search": 2, "engine": 1}
     """
-    # TODO: implement
-    return {}
+    return dict(Counter(tokens))
 
 
 # Step 6: Process ONE document
