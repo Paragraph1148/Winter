@@ -124,7 +124,6 @@ def clean_text(text):
     return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", "", text.lower())).strip()
 
 
-# Step 3: Tokenization Function
 def tokenize(text):
     """
     Input: cleaned text
@@ -134,8 +133,7 @@ def tokenize(text):
     1. Split by space
     2. Remove empty tokens
     """
-    # TODO: implement
-    return []
+    return [token for token in text.split(' ') if token]
 
 
 # Step 4: Remove Stop Words
