@@ -240,18 +240,23 @@ def load_documents(file_path, limit=1000):
     return documents
 
 
-# Step 8: Main function
 def main():
     file_path = "cs_ir_papers.jsonl"  # update path if needed
 
     docs = load_documents(file_path, limit=1000)
 
     # Print sample output
-    print(docs[0])
+    # print(docs[0])
 
     # Optional:
     # - print number of documents
     # - print some stats
+    if docs:
+        # Show the first processed document as a sanity check
+        print("First document:", docs[0])
+        print(f"Total documents loaded: {len(docs)}")
+    else:
+        print("No valid documents were found.")
 
 
 if __name__ == "__main__":
