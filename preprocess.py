@@ -198,11 +198,10 @@ def process_document(page):
 
     # 6 count freq
     freq = get_token_freq(tokens)
-    
+
     return {"id": pid, "tokens": freq}
 
 
-# Step 7: Read JSONL file
 def load_documents(file_path, limit=1000):
     """
     Input: file path
@@ -216,8 +215,22 @@ def load_documents(file_path, limit=1000):
     5. Stop after 'limit' documents
     """
     documents = []
+    with open(file_path, mode="r", encoding="utf-8") as f:
+        for line_no, line in enumerate(f, start=1):
+            if len(documents) >= limit:     # stop after reaching limit
+                break
 
-    # TODO: implement
+            line = line.strip()
+            if not line:                    # skip blank lines
+                continue
+
+            try:
+                paper = json.loads(line)    # convert line to dict
+            except json.JSONDecodeError as exc:
+                pring(f"Line {line_no}: JSON decode error:- {exc}")
+                continue
+            
+            documents.append(process_document(paper))
 
     return documents
 
