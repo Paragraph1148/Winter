@@ -1,8 +1,13 @@
 import json # for jsonl
 import re # for cleaning text
-import collections # for counting
+from collections import Counter # for counting
 
 STOP_WORDS = {
+    "a",
+    "an",
+    "the",
+    "this",
+    "that",
     "and",
     "but",
     "or",
@@ -227,7 +232,7 @@ def load_documents(file_path, limit=1000):
             try:
                 paper = json.loads(line)    # convert line to dict
             except json.JSONDecodeError as exc:
-                pring(f"Line {line_no}: JSON decode error:- {exc}")
+                print(f"Line {line_no}: JSON decode error:- {exc}")
                 continue
             
             documents.append(process_document(paper))
