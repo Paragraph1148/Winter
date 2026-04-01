@@ -126,7 +126,13 @@ def clean_text(text):
     2. Remove punctuation (use regex)
     3. Remove extra spaces
     """
-    return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", "", text.lower())).strip()
+    text = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", text)
+    return re.sub(
+        r"\s+",                     # collapse multiple whitespaces
+        " ", 
+        re.sub(
+            r"[^\w\s]", "",         # remove punctuation
+            text.lower())).strip()  # lowercase and trim ends
 
 
 def tokenize(text):
