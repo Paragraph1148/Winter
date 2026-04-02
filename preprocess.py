@@ -126,7 +126,7 @@ def clean_text(text):
     2. Remove punctuation (use regex)
     3. Remove extra spaces
     """
-    text = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", text)
+    text = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", text) # replace hyphen with whitespace
     return re.sub(
         r"\s+",                     # collapse multiple whitespaces
         " ", 
@@ -134,6 +134,10 @@ def clean_text(text):
             r"[^\w\s]", "",         # remove punctuation
             text.lower())).strip()  # lowercase and trim ends
 
+def remove_urls(text):
+    # Matches http(s)://… or www.… until a whitespace character
+    url_pattern = r"https?://\S+|www\.\S+"
+    return re.sub(url_pattern, "", text)
 
 def tokenize(text):
     """
@@ -199,7 +203,8 @@ def process_document(page):
     combined = f"{ptit} {pabs}"
 
     # 3 clean
-    cleaned = clean_text(combined)
+    removedurl = remove_urls(combined)
+    cleaned = clean_text(removedurl)
 
     # 4 tokenize
     tokens = tokenize(cleaned)
