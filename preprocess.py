@@ -127,12 +127,14 @@ def clean_text(text):
     3. Remove extra spaces
     """
     text = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", text) # replace hyphen with whitespace
-    return re.sub(
+    cleaned = re.sub(
         r"\s+",                     # collapse multiple whitespaces
         " ", 
         re.sub(
             r"[^\w\s]", "",         # remove punctuation
             text.lower())).strip()  # lowercase and trim ends
+    long_tokens = [tok for tok in cleaned.split(" ") if len(tok) > 2]
+    return " ".join(long_tokens)    # re-join the string
 
 def remove_urls(text):
     # Matches http(s)://… or www.… until a whitespace character
