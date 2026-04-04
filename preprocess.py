@@ -237,6 +237,9 @@ def load_documents(file_path, limit=1000):
     5. Stop after 'limit' documents
     """
     documents = []
+    total_chars = 0
+    total_tokens = 0
+
     with open(file_path, mode="r", encoding="utf-8") as f: # with guarantees file is closed after block ends, even if error
         for line_no, line in enumerate(f, start=1):
             if len(documents) >= limit:     # stop after reaching limit
@@ -252,14 +255,31 @@ def load_documents(file_path, limit=1000):
                 print(f"Line {line_no}: JSON decode error:- {exc}")
                 continue
             
-            documents.append(process_document(paper))
+            doc = process_document(paper)
+            documents.append(doc)
+
+            total_chars  += doc["char_len"]
+            total_tokens += doc["token_len"]
+            
+    avg_chars  = total_chars / len(documents) if documents else 0
+    avg_tokens = total_tokens / len(documents) if documents else 0
+    print(f"Average characters per doc: {avg_chars:.1f}")
+    print(f"Average tokens per doc:    {avg_tokens:.1f}")
+
+    total_docs = len(docs)
+    print(f"Total documents loaded: {total_docs}")
+
+    vocab = set()
+    for doc in docs:
+        vocab.update(doc["tokens"].keys())
+
+    print(f"Vocabulary size (unique tokens): {len(vocab)}")
 
     return documents
 
 
 def main():
     file_path = "cs_ir_papers.jsonl"  # update path if needed
-
     docs = load_documents(file_path, limit=1000)
 
     # Print sample output
@@ -268,12 +288,12 @@ def main():
     # Optional:
     # - print number of documents
     # - print some stats
-    if docs:
-        # Show the first processed document as a sanity check
-        print("First document:", docs[0])
-        print(f"Total documents loaded: {len(docs)}")
-    else:
-        print("No valid documents were found.")
+    # if docs:
+    #     # Show the first processed document as a sanity check
+    #     print("First document:", docs[0])
+    #     print(f"Total documents loaded: {len(docs)}")
+    # else:
+    #     print("No valid documents were found.")
 
 
 if __name__ == "__main__":
