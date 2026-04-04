@@ -122,9 +122,9 @@ def clean_text(text):
     Output: cleaned string
 
     Steps:
-    1. Convert to lowercase
+    1. Replace hyphen with whitespace
     2. Remove punctuation (use regex)
-    3. Remove extra spaces
+    3. Filter out tokens with length of characters < 2
     """
     text = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", text) # replace hyphen with whitespace
     cleaned = re.sub(
@@ -233,7 +233,7 @@ def load_documents(file_path, limit=1000):
     5. Stop after 'limit' documents
     """
     documents = []
-    with open(file_path, mode="r", encoding="utf-8") as f:
+    with open(file_path, mode="r", encoding="utf-8") as f: # with guarantees file is closed after block ends, even if error
         for line_no, line in enumerate(f, start=1):
             if len(documents) >= limit:     # stop after reaching limit
                 break
