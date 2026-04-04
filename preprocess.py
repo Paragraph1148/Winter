@@ -217,7 +217,11 @@ def process_document(page):
     # 6 count freq
     freq = get_token_freq(tokens)
 
-    return {"id": pid, "tokens": freq}
+    # 7 track document length
+    char_len = len(cleaned)
+    token_len = len(tokens)
+
+    return {"id": pid, "tokens": freq, "char_len": char_len, "token_len": token_len}
 
 
 def load_documents(file_path, limit=1000):
