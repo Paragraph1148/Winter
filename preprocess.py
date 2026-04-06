@@ -224,7 +224,7 @@ def process_document(page):
     return {"id": pid, "tokens": freq, "char_len": char_len, "token_len": token_len}
 
 
-def load_documents(file_path, limit=1000):
+def load_documents(file_path, limit=10000000):
     """
     Input: file path
     Output: list of processed documents
@@ -260,18 +260,18 @@ def load_documents(file_path, limit=1000):
 
             total_chars  += doc["char_len"]
             total_tokens += doc["token_len"]
-            
+
     avg_chars  = total_chars / len(documents) if documents else 0
     avg_tokens = total_tokens / len(documents) if documents else 0
     print(f"Average characters per doc: {avg_chars:.1f}")
     print(f"Average tokens per doc:    {avg_tokens:.1f}")
 
-    total_docs = len(docs)
+    total_docs = len(documents)
     print(f"Total documents loaded: {total_docs}")
 
     vocab = set()
-    for doc in docs:
-        vocab.update(doc["tokens"].keys())
+    for document in documents:
+        vocab.update(document["tokens"].keys())
 
     print(f"Vocabulary size (unique tokens): {len(vocab)}")
 
@@ -280,7 +280,7 @@ def load_documents(file_path, limit=1000):
 
 def main():
     file_path = "cs_ir_papers.jsonl"  # update path if needed
-    docs = load_documents(file_path, limit=1000)
+    docs = load_documents(file_path, limit=1000000)
 
     # Print sample output
     # print(docs[0])
